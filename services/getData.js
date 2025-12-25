@@ -13,9 +13,7 @@ export const readDataFromFile = async (file) => {
 
 async function getData(file) {
     const dataP = await readDataFromFile(file)
-    console.log(dataP);
     const data = JSON.parse(dataP)
-    console.log(data);
     
     return data
 }
