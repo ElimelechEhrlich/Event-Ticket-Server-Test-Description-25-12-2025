@@ -1,15 +1,17 @@
 import express from "express"
-import contactsRouter from "./routes/contactsR.js"
-import notesRouter from "./routes/notesR.js"
+import usersRouter from "./routes/usersR.js"
+import receiptsRouter from "./routes/receiptsR.js"
+import eventsRouter from "./routes/eventsR.js"
 import { jsonBodyGuard, requestLogger } from "./middlewares/middlewares.js"
 
 const app = express()
 const port = 3000
 
-app.use(express.json(), requestLogger, jsonBodyGuard)
+app.use(express.json())
 
-app.use("/contacts", contactsRouter)
-app.use("/notes", notesRouter)
+app.use("/users", usersRouter)
+app.use("/receipts", receiptsRouter)
+app.use("/events", eventsRouter)
 
 app.listen(port, () => {
     console.log(`server runing on http://localhost:${port}`);
