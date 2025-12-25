@@ -44,6 +44,10 @@ const addUser = async (req, res) => {
     }
 }
 
+const getPurchasesSummaryByUser = async () => {
+    const receipts = await getData("./data/receipts.json")
+}
+
 export {
     validateuser,
     isUsernameNotExsist,

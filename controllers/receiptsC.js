@@ -1,15 +1,31 @@
-import express from "express"
-
-const router = express.Router()
-
-router.get("/", async (req, res) => {})
-router.get("/:id", async (req, res) => {})
-router.get("/:id/notes", async (req, res) => {})
-router.post("/", async (req, res) => {})
-router.post("/:id/notes", async (req, res) => {})
-router.put("/:id", async (req, res) => {})
-router.patch("/:id", async (req, res) => {})
-router.delete("/:id", async (req, res) => {})
+import { getData } from "../services/getData.js"
 
 
-export default router
+const buyTickets = async (req, res) => {
+    const receipts = await getData("./data/receipts.json")
+    const events = await getData("./data/events.json")
+    const event = events.find(event => event.eventName.toLowerCase() === req.body.eventName.toLowerCase())
+    try {
+        if ((req.body.eventName) && (req.body.quantity)) {
+            if (event.ticketsForSale - req.body.quantity >= 0) {
+                event.ticketsForSale -= req.body.quantity;
+                receipts.push({ username: req.headers.username ,password: req.headers.password, eventName: req.body.eventName ,quantity: req.body.quantity })
+                await writeData("./data/receipts.json", JSON.stringify(receipts))
+                res.json({ message: "Tickets purchased successfully" })
+            }
+            else {
+                res.json({ message: "The quantity is greater than the number of tickets left for this event." })
+            }
+        }
+        else {
+            res.sendStatus(400)
+        }
+    } catch (error) {
+        console.error(error);
+        res.status().json({error})
+    }
+}
+
+export {
+    buyTickets
+}

@@ -17,7 +17,19 @@ const addEvent = async (req, res) => {
     }
 }
 
+const findEvent = async (req, res, next) => {
+    const events = await getData("./data/events.json")
+    const event = events.find(event => event.eventName === req.body.eventName)
+    if (event) {
+        next()
+    }
+    else {
+        res.json({ message: "There is no event with this name." })
+    }
+}
+
 export {
-    addEvent
+    addEvent,
+    findEvent
 }
 
