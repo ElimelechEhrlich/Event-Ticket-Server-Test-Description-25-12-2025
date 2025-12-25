@@ -6,7 +6,7 @@ const addEvent = async (req, res) => {
     const events = await getData("./data/events.json")
     try {
         if ((req.body.eventName) && (req.body.ticketsForSale)) {
-            events.push({eventName: req.body.eventName ,ticketsForSale: req.body.ticketsForSale, username: req.headers.username ,password: req.headers.password})
+            events.push({eventName: req.body.eventName ,ticketsAvailable: req.body.ticketsForSale, createdBy: req.body.username})
             await writeData("./data/events.json", JSON.stringify(events))
             res.send({message: "Event created successfully"})
         }

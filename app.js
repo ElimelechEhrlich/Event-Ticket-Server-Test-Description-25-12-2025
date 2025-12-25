@@ -1,8 +1,7 @@
 import express from "express"
 import usersRouter from "./routes/usersR.js"
-import receiptsRouter from "./routes/receiptsR.js"
-import eventsRouter from "./routes/eventsR.js"
-import { jsonBodyGuard, requestLogger } from "./middlewares/middlewares.js"
+import { addUser, isUsernameExsist, isUsernameNotExsist, validateuser } from "./controllers/usersC.js"
+import { addEvent } from "./controllers/eventsC.js"
 
 const app = express()
 const port = 3000
@@ -10,8 +9,9 @@ const port = 3000
 app.use(express.json())
 
 app.use("/users", usersRouter)
-app.use("/receipts", receiptsRouter)
-app.use("/events", eventsRouter)
+app.post("/user/register", isUsernameNotExsist, addUser)
+app.post("/creator/events", isUsernameExsist, validateuser, addEvent)
+
 
 app.listen(port, () => {
     console.log(`server runing on http://localhost:${port}`);

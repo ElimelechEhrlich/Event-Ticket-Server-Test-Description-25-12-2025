@@ -9,7 +9,7 @@ const buyTickets = async (req, res) => {
         if ((req.body.eventName) && (req.body.quantity)) {
             if (event.ticketsForSale - req.body.quantity >= 0) {
                 event.ticketsForSale -= req.body.quantity;
-                receipts.push({ username: req.headers.username ,password: req.headers.password, eventName: req.body.eventName ,quantity: req.body.quantity })
+                receipts.push({ username: req.body.username, eventName: req.body.eventName ,ticketsBought: req.body.quantity })
                 await writeData("./data/receipts.json", JSON.stringify(receipts))
                 res.json({ message: "Tickets purchased successfully" })
             }
