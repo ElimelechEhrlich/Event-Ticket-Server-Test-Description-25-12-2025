@@ -4,8 +4,8 @@ import { writeData } from "../services/writeData.js"
 
 const validateuser = async (req, res, next) => {
     if ((req.body.username) && (req.body.password)) {
-        const users = await getData("./data/users.json")
-        const user = users.find(user => user.username === req.body.username && user.password === req.body.password)
+        const users = await getData("./data/users.json")       
+        const user = users.find(user => user.username === req.body.username && JSON.parse(user.password) === (req.body.password))
         if (user) {
             try {
                 next()
@@ -13,7 +13,9 @@ const validateuser = async (req, res, next) => {
                 res.status().json({error})
             }
         }
-        else res.sendStatus(401);
+        else {
+            res.sendStatus(401);
+        }
     }
     else res.sendStatus(400)
 }

@@ -28,8 +28,24 @@ const findEvent = async (req, res, next) => {
     }
 }
 
+
+const isEventNotExsist = async (req, res, next) => {
+    const events = await getData("./data/users.json")
+    const event = events.find(event => event.username === req.body.eventName)
+    if (!event) {
+        try {
+            next()
+        } catch (error) {
+            console.error(error);
+            res.status().json({error})
+        }
+    }
+    else res.sendStatus(409);
+}
+
 export {
     addEvent,
-    findEvent
+    findEvent,
+    isEventNotExsist
 }
 

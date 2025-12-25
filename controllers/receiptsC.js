@@ -1,4 +1,5 @@
 import { getData } from "../services/getData.js"
+import { writeData } from "../services/writeData.js"
 
 
 const buyTickets = async (req, res) => {
@@ -7,8 +8,9 @@ const buyTickets = async (req, res) => {
     const event = events.find(event => event.eventName.toLowerCase() === req.body.eventName.toLowerCase())
     try {
         if ((req.body.eventName) && (req.body.quantity)) {
-            if (event.ticketsForSale - req.body.quantity >= 0) {
-                event.ticketsForSale -= req.body.quantity;
+            if (event.ticketsAvailable - req.body.quantity >= 0) {
+                event.ticketsAvailable -= req.body.quantity;
+                await writeData("./data/events.json", JSON.stringify(events))
                 receipts.push({ username: req.body.username, eventName: req.body.eventName ,ticketsBought: req.body.quantity })
                 await writeData("./data/receipts.json", JSON.stringify(receipts))
                 res.json({ message: "Tickets purchased successfully" })
