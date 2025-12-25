@@ -12,7 +12,6 @@ app.use("/users", usersRouter)
 app.post("/user/register", isUsernameNotExsist, addUser)
 app.post("/creator/events", isUsernameExsist, validateuser, addEvent)
 
-
 app.listen(port, () => {
     console.log(`server runing on http://localhost:${port}`);
 })

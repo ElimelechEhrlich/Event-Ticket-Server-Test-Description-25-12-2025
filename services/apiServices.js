@@ -1,5 +1,0 @@
-getAll(resource)
-getById(resource, id)
-insert(resource, obj)
-update(resource, id, patchOrFull)
-remove(resource, id)
