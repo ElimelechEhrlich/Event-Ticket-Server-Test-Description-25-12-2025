@@ -30,7 +30,7 @@ const findEvent = async (req, res, next) => {
 
 
 const isEventNotExsist = async (req, res, next) => {
-    const events = await getData("./data/users.json")
+    const events = await getData("./data/events.json")
     const event = events.find(event => event.username === req.body.eventName)
     if (!event) {
         try {
