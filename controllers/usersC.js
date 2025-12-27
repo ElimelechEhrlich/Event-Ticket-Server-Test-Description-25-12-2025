@@ -68,7 +68,7 @@ const getPurchasesSummaryByUser = async (req, res) => {
     const userReceipts = receipts.filter(receipt => receipt.username === req.params.username)
     if (userReceipts[0]) {
         const totalTicketsBought = userReceipts.reduce((sum, receipt) => {
-                sum + receipt.quantity
+                sum + receipt.ticketsBought
             },0)
         const events = []
         userReceipts.reduce((events, receipt) => {
